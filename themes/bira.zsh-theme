@@ -38,5 +38,6 @@ ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
 ZSH_THEME_PYENV_PROMPT_PREFIX="%{$fg[green]%}‹"
 ZSH_THEME_PYENV_PROMPT_SUFFIX="› %{$reset_color%}"
 
-ZSH_THEME_AWS_PREFIX="%{$fg[red]%}‹aws:"
+ZSH_THEME_AWS_PREFIX="%{$fg[red]%}🔧 ‹aws:"
 ZSH_THEME_AWS_SUFFIX="› %{$reset_color%}"
+
