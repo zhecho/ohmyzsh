@@ -29,10 +29,19 @@ if [[ $FOUND_PYENV -eq 1 ]]; then
     if (( $+commands[pyenv-virtualenv-init] )); then
         eval "$(pyenv virtualenv-init - zsh)"
     fi
-    function pyenv_prompt_info(){
-      [[ -n ${PY_ENV} ]] || return
-      echo "${ZSH_THEME_PYENV_PREFIX:=[}${PY_ENV:t}${ZSH_THEME_PYENV_SUFFIX:=]}"
+    function pyenv_prompt_info() {
+        export PY_ENV="pyenv-$(pyenv local 2>&1)" 
+        if [[  $PY_ENV == "pyenv-pyenv: no local version configured for this directory" ]]; then
+            export PY_ENV=''
+            return
+        else
+            echo "${ZSH_THEME_PYENV_PREFIX:=[}${PY_ENV:t}${ZSH_THEME_PYENV_SUFFIX:=]}"
+        fi
     }
+    #function pyenv_prompt_info(){
+    #  [[ -n ${PY_ENV} ]] || return
+    #  echo "${ZSH_THEME_PYENV_PREFIX:=[}${PY_ENV:t}${ZSH_THEME_PYENV_SUFFIX:=]}"
+    #}
 else
     # fallback to system python
     function pyenv_prompt_info() {
