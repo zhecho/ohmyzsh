@@ -17,10 +17,19 @@ function asp() {
     echo "Available profiles: ${(j:, :)available_profiles:-no profiles found}${reset_color}" >&2
     return 1
   fi
-
   export AWS_DEFAULT_PROFILE=$1
   export AWS_PROFILE=$1
   export AWS_EB_PROFILE=$1
+
+  # Wrong way .. 
+  # assume-role 
+  if [[ -z "$2" ]]; then
+    DURATIION="4h"
+  else
+    DURATIION=$2
+  fi
+  # eval $(command assume-role -duration $DURATIION $1);
+
 }
 
 function aws_change_access_key() {
