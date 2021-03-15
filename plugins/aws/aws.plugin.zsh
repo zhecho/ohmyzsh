@@ -59,9 +59,21 @@ function _aws_profiles() {
 compctl -K _aws_profiles asp aws_change_access_key
 
 # AWS prompt
-function aws_prompt_info() {
-  [[ -z $AWS_PROFILE ]] && return
-  echo "${ZSH_THEME_AWS_PREFIX:=<aws:}${AWS_PROFILE}${ZSH_THEME_AWS_SUFFIX:=>}"
+function aws_prompt_info () {
+  if [[ ! -z "${AWSUME_PROFILE}" ]]; then
+      # Set AWSUME_EXPIRED environment
+      eval $(~/.oh-my-zsh/plugins/aws/update_awsume_expiration_var.py)
+      if [[ "${AWSUME_EXPIRED}" == "True" ]]; then
+          return
+      else
+          echo "${ZSH_THEME_AWS_PREFIX:=\<aws:}${AWSUME_PROFILE}${ZSH_THEME_AWS_SUFFIX:=\>}"
+          return
+      fi
+  fi
+  if [[ ! -z "${AWS_PROFILE}" ]]; then
+      echo "${ZSH_THEME_AWS_PREFIX:=\<aws:}${AWS_PROFILE}${ZSH_THEME_AWS_SUFFIX:=\>}"
+      return
+  fi
 }
 
 if [ "$SHOW_AWS_PROMPT" != false ]; then
